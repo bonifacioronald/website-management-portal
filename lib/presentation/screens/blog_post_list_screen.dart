@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:website_management_portal/data/providers/blog_post_provider.dart';
+import 'package:website_management_portal/data/repositories/blog_post_repository.dart';
+import 'package:website_management_portal/presentation/bloc/blog_post_bloc.dart';
 import 'package:website_management_portal/presentation/widgets/content_table.dart';
 import '../../data/models/color.dart' as custom_colors;
 import '../widgets/custom_search_bar.dart';
@@ -21,19 +26,30 @@ class BlogPostListScreen extends StatelessWidget {
         ),
         backgroundColor: custom_colors.primaryColor,
       ),
-      body: Container(
-          width: double.infinity,
-          height: double.infinity,
-          color: custom_colors.primaryColor,
-          child: Column(
-            children: [
-              const Divider(
-                height: 1,
+      body: BlocBuilder<BlogPostBloc, BlogPostState>(
+        builder: (context, state) {
+          if (state is BlogPostInitial) {
+            return Center(child: CircularProgressIndicator());
+          }
+          if (state is BlogPostLoaded) {
+            return Container(
+              width: double.infinity,
+              height: double.infinity,
+              color: custom_colors.primaryColor,
+              child: Column(
+                children: [
+                  const Divider(
+                    height: 1,
+                  ),
+                  _TableEntriesAndSearch(),
+                  ContentTable(),
+                ],
               ),
-              _TableEntriesAndSearch(),
-              ContentTable(),
-            ],
-          )),
+            );
+          } else
+            return Container();
+        },
+      ),
     );
   }
 }

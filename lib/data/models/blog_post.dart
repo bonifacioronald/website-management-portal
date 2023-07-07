@@ -1,25 +1,6 @@
-// class BlogPost {
-//   String postId;
-//   String title;
-//   String body;
-//   String categoryId;
-//   String status;
-//   String label;
-//   DateTime createdAt;
-//   DateTime updatedAt;
+import 'package:equatable/equatable.dart';
 
-//   BlogPost(
-//       {required this.postId,
-//       required this.title,
-//       required this.body,
-//       required this.categoryId,
-//       required this.status,
-//       required this.label,
-//       required this.createdAt,
-//       required this.updatedAt});
-// }
-
-class BlogPost {
+class BlogPost extends Equatable {
   String userId;
   String id;
   String title;
@@ -31,4 +12,7 @@ class BlogPost {
     required this.title,
     required this.body,
   });
+
+  @override
+  List<Object?> get props => [userId, id, title, body];
 }
