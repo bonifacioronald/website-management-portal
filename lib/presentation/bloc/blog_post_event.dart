@@ -6,3 +6,5 @@ abstract class BlogPostEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
+
+class LoadBlogPost extends BlogPostEvent {}
