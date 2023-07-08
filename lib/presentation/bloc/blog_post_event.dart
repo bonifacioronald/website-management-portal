@@ -8,3 +8,12 @@ abstract class BlogPostEvent extends Equatable {
 }
 
 class LoadBlogPost extends BlogPostEvent {}
+
+class UpdateTotalEntries extends BlogPostEvent {
+  int totalEntries;
+
+  UpdateTotalEntries(this.totalEntries);
+
+  @override
+  List<Object> get props => [totalEntries];
+}

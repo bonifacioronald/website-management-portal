@@ -13,15 +13,15 @@ class TableHeading extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
       height: 40,
       color: custom_colors.secondaryColor,
       child: Row(
         children: [
           Container(
-            width: 120,
+            width: 100,
             child: Text(
-              "USER ID",
+              "POST ID",
               style: TextStyle(
                   fontSize: 14,
                   color: custom_colors.fontColor,
@@ -29,9 +29,9 @@ class TableHeading extends StatelessWidget {
             ),
           ),
           Container(
-            width: 120,
+            width: 100,
             child: Text(
-              "POST ID",
+              "USER ID",
               style: TextStyle(
                   fontSize: 14,
                   color: custom_colors.fontColor,
@@ -46,6 +46,9 @@ class TableHeading extends StatelessWidget {
                   color: custom_colors.fontColor,
                   fontWeight: FontWeight.bold),
             ),
+          ),
+          SizedBox(
+            width: 40,
           ),
           Expanded(
             child: Text(
