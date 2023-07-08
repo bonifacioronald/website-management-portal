@@ -42,7 +42,7 @@ class BlogPostListScreen extends StatelessWidget {
                     height: 1,
                   ),
                   _TableEntriesAndSearch(),
-                  ContentTable(),
+                  Expanded(child: ContentTable()),
                 ],
               ),
             );

@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import '../../data/models/color.dart' as custom_colors;
 
 class TableHeading extends StatelessWidget {
-  List<String> columnHeaderList;
-
-  TableHeading(this.columnHeaderList);
+  List<String> columnHeaderList = [
+    "AUTHOR ID",
+    "POST ID",
+    "TITLE",
+    "BODY",
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -13,24 +16,47 @@ class TableHeading extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
       height: 40,
       color: custom_colors.secondaryColor,
-      child: ListView.builder(
-        scrollDirection: Axis.horizontal,
-        itemCount: columnHeaderList.length,
-        itemBuilder: (_, index) {
-          double columnWidth =
-              MediaQuery.of(context).size.width / columnHeaderList.length;
-          return Container(
-            width: columnWidth,
-            alignment: Alignment.centerLeft,
+      child: Row(
+        children: [
+          Container(
+            width: 120,
             child: Text(
-              columnHeaderList[index],
+              "USER ID",
               style: TextStyle(
-                  fontWeight: FontWeight.bold,
                   fontSize: 14,
-                  color: custom_colors.fontColor),
+                  color: custom_colors.fontColor,
+                  fontWeight: FontWeight.bold),
             ),
-          );
-        },
+          ),
+          Container(
+            width: 120,
+            child: Text(
+              "POST ID",
+              style: TextStyle(
+                  fontSize: 14,
+                  color: custom_colors.fontColor,
+                  fontWeight: FontWeight.bold),
+            ),
+          ),
+          Expanded(
+            child: Text(
+              "TITLE",
+              style: TextStyle(
+                  fontSize: 14,
+                  color: custom_colors.fontColor,
+                  fontWeight: FontWeight.bold),
+            ),
+          ),
+          Expanded(
+            child: Text(
+              "BODY",
+              style: TextStyle(
+                  fontSize: 14,
+                  color: custom_colors.fontColor,
+                  fontWeight: FontWeight.bold),
+            ),
+          ),
+        ],
       ),
     );
   }
