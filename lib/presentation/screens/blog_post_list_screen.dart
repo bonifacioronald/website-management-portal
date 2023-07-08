@@ -43,6 +43,18 @@ class BlogPostListScreen extends StatelessWidget {
                   ),
                   _TableEntriesAndSearch(),
                   Expanded(child: ContentTable()),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: Container(
+                      height: 60,
+                      padding: EdgeInsets.all(20),
+                      width: 200,
+                      child: Container(
+                        color: Colors.yellow,
+                        child: Text("Next Page"),
+                      ),
+                    ),
+                  )
                 ],
               ),
             );
@@ -61,10 +73,12 @@ class _TableEntriesAndSearch extends StatefulWidget {
 
 class _TableEntriesAndSearchState extends State<_TableEntriesAndSearch> {
   List<String> entryOptions = ["5", "6", "7", "8", "9", "10"];
-  String? selectedEntry = "7";
+  String? selectedEntry;
 
   @override
   Widget build(BuildContext context) {
+    final blogPostBloc = BlocProvider.of<BlogPostBloc>(context);
+    selectedEntry = blogPostBloc.currentTotalEntries.toString();
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 12, horizontal: 20),
       child: Column(
@@ -102,6 +116,8 @@ class _TableEntriesAndSearchState extends State<_TableEntriesAndSearch> {
                   onChanged: (item) => setState(
                     () {
                       selectedEntry = item;
+                      blogPostBloc
+                          .add(UpdateTotalEntries(int.parse(selectedEntry!)));
                     },
                   ),
                 ),
