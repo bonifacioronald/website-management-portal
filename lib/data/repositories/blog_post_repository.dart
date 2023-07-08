@@ -31,7 +31,7 @@ class BlogPostRepository {
       );
       _blogPost = loadedBlogPost;
     } catch (e) {
-      throw Exception("Converesion failed");
+      throw Exception("Converetion failed");
     }
   }
 }

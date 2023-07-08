@@ -16,6 +16,9 @@ class ContentTable extends StatelessWidget {
 
     return BlocBuilder<BlogPostBloc, BlogPostState>(
       builder: (context, state) {
+        if (state is BlogPostInitial) {
+          return Center(child: CircularProgressIndicator());
+        }
         if (state is BlogPostLoaded) {
           final List<BlogPost> blogPostList = state.blogPostList;
           return Column(
@@ -31,6 +34,37 @@ class ContentTable extends StatelessWidget {
                     },
                   ),
                 ),
+              ),
+            ],
+          );
+        }
+        if (state is SearchingBlog) {
+          final List<BlogPost> suggestedBlogPostList =
+              state.suggestedBlogPostList;
+          return Column(
+            children: [
+              TableHeading(),
+              Expanded(
+                child: suggestedBlogPostList.length == 0
+                    ? Center(
+                        child: Text(
+                          "Sorry, we can not find any matching data",
+                          style: TextStyle(
+                              fontSize: 14, color: custom_colors.fontColor),
+                        ),
+                      )
+                    : Container(
+                        width: double.infinity,
+                        child: ListView.builder(
+                          itemCount: (suggestedBlogPostList.length >
+                                  blogPostBloc.currentTotalEntries)
+                              ? blogPostBloc.currentTotalEntries
+                              : suggestedBlogPostList.length,
+                          itemBuilder: (_, index) {
+                            return TableItem(suggestedBlogPostList[index]);
+                          },
+                        ),
+                      ),
               ),
             ],
           );

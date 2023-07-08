@@ -17,3 +17,12 @@ class UpdateTotalEntries extends BlogPostEvent {
   @override
   List<Object> get props => [totalEntries];
 }
+
+class SearchBlogPost extends BlogPostEvent {
+  String searchKey;
+
+  SearchBlogPost(this.searchKey);
+
+  @override
+  List<Object> get props => [searchKey];
+}
