@@ -7,32 +7,22 @@ import 'package:website_management_portal/presentation/widgets/table_header.dart
 import '../../data/models/color.dart' as custom_colors;
 
 class ContentTable extends StatelessWidget {
-  List<String> columnHeaderList = [
-    "POST ID",
-    "TITLE",
-    "BODY",
-    "CATEGORY ID",
-    "STATUS",
-    "LABEL",
-    "CREATED AT",
-    "UPDATED AT"
-  ];
-
   @override
   Widget build(BuildContext context) {
     List<BlogPost> _blogPostList = BlogPostRepository.blogPost;
 
     return Column(
       children: [
-        TableHeading(columnHeaderList),
-        Container(
-          height: 500,
-          width: double.infinity,
-          child: ListView.builder(
-              itemCount: _blogPostList.length,
-              itemBuilder: (_, index) {
-                return Text(_blogPostList[index].title);
-              }),
+        TableHeading(),
+        Expanded(
+          child: Container(
+            width: double.infinity,
+            child: ListView.builder(
+                itemCount: _blogPostList.length,
+                itemBuilder: (_, index) {
+                  return Text(_blogPostList[index].title);
+                }),
+          ),
         )
       ],
     );
