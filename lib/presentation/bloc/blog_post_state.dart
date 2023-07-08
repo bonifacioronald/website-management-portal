@@ -17,3 +17,12 @@ class BlogPostLoaded extends BlogPostState {
   @override
   List<Object> get props => [blogPostList];
 }
+
+class SearchingBlog extends BlogPostState {
+  final List<BlogPost> suggestedBlogPostList;
+
+  SearchingBlog(this.suggestedBlogPostList);
+
+  @override
+  List<Object> get props => [suggestedBlogPostList];
+}
