@@ -1,5 +1,5 @@
-import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class BlogPostProvider {
   Future<List<Map<String, dynamic>>> fetchBlogPost() async {

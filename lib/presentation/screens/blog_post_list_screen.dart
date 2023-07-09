@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:website_management_portal/presentation/bloc/blog_post_bloc.dart';
-import 'package:website_management_portal/presentation/widgets/content_table.dart';
-import 'package:website_management_portal/presentation/widgets/drop_down_entry_menu.dart';
-import 'package:website_management_portal/presentation/widgets/page_indicator.dart';
 import '../../data/models/color.dart' as custom_colors;
+
+import '../../presentation/widgets/content_table.dart';
+import '../../presentation/widgets/drop_down_entry_menu.dart';
+import '../../presentation/widgets/page_indicator.dart';
 import '../widgets/custom_search_bar.dart';
 
 class BlogPostListScreen extends StatelessWidget {
@@ -37,10 +36,9 @@ class BlogPostListScreen extends StatelessWidget {
             _TableEntriesAndSearch(),
             Expanded(child: ContentTable()),
             Container(
-              padding: EdgeInsets.only(right: 20, bottom: 20),
-              //      color: Colors.red,
+              padding: const EdgeInsets.only(right: 20, bottom: 20),
               height: 60,
-              child: Row(
+              child: const Row(
                 children: [
                   Spacer(),
                   PageIndicator(),
@@ -58,7 +56,7 @@ class _TableEntriesAndSearch extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
       child: Column(
         children: [
           Row(
@@ -67,23 +65,23 @@ class _TableEntriesAndSearch extends StatelessWidget {
                 'Show',
                 style: TextStyle(fontSize: 14, color: custom_colors.fontColor),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 8,
               ),
-              DropDownEntryMenu(),
-              SizedBox(
+              const DropDownEntryMenu(),
+              const SizedBox(
                 width: 8,
               ),
               Text(
                 'entries',
                 style: TextStyle(fontSize: 14, color: custom_colors.fontColor),
               ),
-              Spacer(),
+              const Spacer(),
               Text(
                 'Search',
                 style: TextStyle(fontSize: 14, color: custom_colors.fontColor),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 8,
               ),
               CustomSearchBar(),

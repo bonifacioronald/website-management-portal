@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:website_management_portal/data/models/blog_post.dart';
 import '../../data/models/color.dart' as custom_colors;
+
+import '../../data/models/blog_post.dart';
 
 class TableItem extends StatelessWidget {
   BlogPost item;
 
-  TableItem(this.item);
+  TableItem(this.item, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +14,7 @@ class TableItem extends StatelessWidget {
       children: [
         Container(
           width: double.infinity,
-          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
           height: 40,
           color: custom_colors.primaryColor,
           child: Row(
@@ -48,7 +49,7 @@ class TableItem extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 40,
               ),
               Expanded(

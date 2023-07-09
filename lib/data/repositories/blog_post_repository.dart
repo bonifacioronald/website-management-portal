@@ -1,5 +1,5 @@
-import 'package:website_management_portal/data/models/blog_post.dart';
-import 'package:website_management_portal/data/providers/blog_post_provider.dart';
+import '../../data/models/blog_post.dart';
+import '../../data/providers/blog_post_provider.dart';
 
 class BlogPostRepository {
   BlogPostProvider apiProvider;
@@ -17,18 +17,16 @@ class BlogPostRepository {
       List<Map<String, dynamic>> extractedData =
           await apiProvider.fetchBlogPost();
       List<BlogPost> loadedBlogPost = [];
-      extractedData.forEach(
-        (blog) {
-          loadedBlogPost.add(
-            BlogPost(
-              userId: blog["userId"].toString(),
-              id: blog["id"].toString(),
-              title: blog['title'],
-              body: blog["body"],
-            ),
-          );
-        },
-      );
+      for (var blog in extractedData) {
+        loadedBlogPost.add(
+          BlogPost(
+            userId: blog["userId"].toString(),
+            id: blog["id"].toString(),
+            title: blog['title'],
+            body: blog["body"],
+          ),
+        );
+      }
       _blogPost = loadedBlogPost;
     } catch (e) {
       throw Exception("Converetion failed");

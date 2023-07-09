@@ -25,7 +25,7 @@ class _DropDownEntryMenuState extends State<DropDownEntryMenu> {
           borderRadius: BorderRadius.circular(8)),
       child: DropdownButton<String>(
         underline: Container(),
-        padding: EdgeInsets.symmetric(horizontal: 12),
+        padding: const EdgeInsets.symmetric(horizontal: 12),
         isExpanded: true,
         value: blogPostBloc.currentTotalEntries.toString(),
         items: entryOptions

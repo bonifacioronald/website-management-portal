@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:website_management_portal/data/providers/blog_post_provider.dart';
-import 'package:website_management_portal/presentation/bloc/blog_post_bloc.dart';
-import 'package:website_management_portal/presentation/screens/blog_post_list_screen.dart';
+import '../../presentation/bloc/blog_post_bloc.dart';
+import '../../presentation/screens/blog_post_list_screen.dart';
 
 void main() {
   runApp(const MyApp());

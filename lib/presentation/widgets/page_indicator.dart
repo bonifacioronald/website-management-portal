@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:website_management_portal/data/repositories/blog_post_repository.dart';
-import 'package:website_management_portal/presentation/bloc/blog_post_bloc.dart';
+import '../../data/repositories/blog_post_repository.dart';
+import '../../presentation/bloc/blog_post_bloc.dart';
 import '../../data/models/color.dart' as custom_colors;
 
 class PageIndicator extends StatefulWidget {
@@ -43,8 +42,8 @@ class _PageIndicatorState extends State<PageIndicator> {
                     }
                   });
                 },
-                child: _PreviousPageButton()),
-            SizedBox(
+                child: const _PreviousPageButton()),
+            const SizedBox(
               width: 8,
             ),
             Container(
@@ -81,7 +80,7 @@ class _PageIndicatorState extends State<PageIndicator> {
                 ],
               ),
             ),
-            SizedBox(
+            const SizedBox(
               width: 8,
             ),
             GestureDetector(
@@ -96,7 +95,7 @@ class _PageIndicatorState extends State<PageIndicator> {
                     },
                   );
                 },
-                child: _NextPageButton())
+                child: const _NextPageButton())
           ],
         );
       },
