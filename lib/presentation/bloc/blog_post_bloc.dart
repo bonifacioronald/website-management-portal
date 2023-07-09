@@ -17,6 +17,7 @@ class BlogPostBloc extends Bloc<BlogPostEvent, BlogPostState> {
   late int lastPageOption;
   late int firstDisplayedBlogPostIndex;
   late int lastDisplayedBlogPostIndex;
+  late int pageNeededForSearchResult;
 
   BlogPostBloc() : super(BlogPostInitial()) {
     on<LoadBlogPost>(
@@ -39,11 +40,11 @@ class BlogPostBloc extends Bloc<BlogPostEvent, BlogPostState> {
 
         List<BlogPost> displayedBlogPost = [];
         if (isSearching == true) {
-          //show whats searched instead
+          //show whats searched
           if (searchedBlogPost.length > currentTotalEntries) {
             //if the suggestion list > selected total entry, only display as many as the total entry
-            displayedBlogPost =
-                searchedBlogPost.sublist(0, currentTotalEntries);
+            displayedBlogPost = searchedBlogPost.sublist(
+                firstDisplayedBlogPostIndex, lastDisplayedBlogPostIndex);
           } else {
             //if the suggestion list < selected total entry, display all suggestion
             displayedBlogPost = searchedBlogPost;
@@ -64,10 +65,13 @@ class BlogPostBloc extends Bloc<BlogPostEvent, BlogPostState> {
           isSearching = false;
         } else {
           isSearching = true;
+          currentPage = 1;
           List<BlogPost> suggestion = BlogPostRepository.blogPost.where((post) {
             return post.title.contains(event.searchKey);
           }).toList();
           searchedBlogPost = suggestion;
+          pageNeededForSearchResult =
+              (searchedBlogPost.length / currentTotalEntries).ceil();
           emit(SearchingBlog(searchedBlogPost));
         }
       },
@@ -85,18 +89,14 @@ class BlogPostBloc extends Bloc<BlogPostEvent, BlogPostState> {
         }
 
         if (isSearching == true) {
-          //show whats searched instead
           if (searchedBlogPost.length > currentTotalEntries) {
-            //if the suggestion list > selected total entry, only display as many as the total entry
-            displayedBlogPost =
-                searchedBlogPost.sublist(0, currentTotalEntries);
+            displayedBlogPost = searchedBlogPost.sublist(
+                firstDisplayedBlogPostIndex, lastDisplayedBlogPostIndex);
           } else {
-            //if the suggestion list < selected total entry, display all suggestion
             displayedBlogPost = searchedBlogPost;
           }
           emit(SearchingBlog(displayedBlogPost));
         } else {
-          //show everything
           displayedBlogPost = BlogPostRepository.blogPost
               .sublist(firstDisplayedBlogPostIndex, lastDisplayedBlogPostIndex);
           emit(BlogPostLoaded(displayedBlogPost));
