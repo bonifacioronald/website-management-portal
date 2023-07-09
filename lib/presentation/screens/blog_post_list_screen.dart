@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:website_management_portal/data/providers/blog_post_provider.dart';
-import 'package:website_management_portal/data/repositories/blog_post_repository.dart';
 import 'package:website_management_portal/presentation/bloc/blog_post_bloc.dart';
 import 'package:website_management_portal/presentation/widgets/content_table.dart';
 import 'package:website_management_portal/presentation/widgets/drop_down_entry_menu.dart';
@@ -60,7 +57,6 @@ class BlogPostListScreen extends StatelessWidget {
 class _TableEntriesAndSearch extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final blogPostBloc = BlocProvider.of<BlogPostBloc>(context);
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 12, horizontal: 20),
       child: Column(

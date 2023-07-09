@@ -23,6 +23,7 @@ class CustomSearchBar extends StatelessWidget {
             onTap: () {
               searchController.clear();
               blogPostBloc.isSearching = false;
+              blogPostBloc.currentPage = 1;
               blogPostBloc.add(LoadBlogPost());
             },
             child: Icon(
