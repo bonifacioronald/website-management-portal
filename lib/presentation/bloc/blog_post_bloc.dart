@@ -13,18 +13,24 @@ class BlogPostBloc extends Bloc<BlogPostEvent, BlogPostState> {
   List<BlogPost> searchedBlogPost = [];
   bool isSearching = false;
 
+  int currentPage = 1;
+  late int lastPageOption;
+
   BlogPostBloc() : super(BlogPostInitial()) {
     on<LoadBlogPost>(
       (event, emit) async {
         final dataRepo = BlogPostRepository(BlogPostProvider());
         await dataRepo.fetchAndSetBlogPostData();
+
         emit(BlogPostLoaded(BlogPostRepository.blogPost));
       },
     );
 
     on<UpdateTotalEntries>(
       (event, emit) {
+        print(isSearching);
         currentTotalEntries = event.totalEntries;
+
         List<BlogPost> displayedBlogPost = [];
         if (isSearching == true) {
           //show whats searched instead
@@ -58,6 +64,13 @@ class BlogPostBloc extends Bloc<BlogPostEvent, BlogPostState> {
           searchedBlogPost = suggestion;
           emit(SearchingBlog(searchedBlogPost));
         }
+      },
+    );
+
+    on<ChangePage>(
+      (event, emit) {
+        currentPage = event.currentPage;
+        print("current page: $currentPage");
       },
     );
   }

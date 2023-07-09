@@ -19,6 +19,18 @@ class CustomSearchBar extends StatelessWidget {
         textAlignVertical: TextAlignVertical.center,
         style: TextStyle(fontSize: 14),
         decoration: InputDecoration(
+          suffixIcon: GestureDetector(
+            onTap: () {
+              searchController.clear();
+              blogPostBloc.isSearching = false;
+              blogPostBloc.add(LoadBlogPost());
+            },
+            child: Icon(
+              Icons.close,
+              color: custom_colors.fontColor,
+              size: 14,
+            ),
+          ),
           hintText: "enter title...",
           hintStyle: TextStyle(
               fontSize: 14, color: custom_colors.fontColor.withOpacity(0.4)),
