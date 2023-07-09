@@ -6,6 +6,7 @@ import 'package:website_management_portal/data/repositories/blog_post_repository
 import 'package:website_management_portal/presentation/bloc/blog_post_bloc.dart';
 import 'package:website_management_portal/presentation/widgets/content_table.dart';
 import 'package:website_management_portal/presentation/widgets/drop_down_entry_menu.dart';
+import 'package:website_management_portal/presentation/widgets/page_indicator.dart';
 import '../../data/models/color.dart' as custom_colors;
 import '../widgets/custom_search_bar.dart';
 
@@ -38,18 +39,17 @@ class BlogPostListScreen extends StatelessWidget {
             ),
             _TableEntriesAndSearch(),
             Expanded(child: ContentTable()),
-            Align(
-              alignment: Alignment.centerRight,
-              child: Container(
-                height: 60,
-                padding: EdgeInsets.all(20),
-                width: 200,
-                child: Container(
-                  color: Colors.yellow,
-                  child: Text("Next Page"),
-                ),
+            Container(
+              padding: EdgeInsets.only(right: 20, bottom: 20),
+              //      color: Colors.red,
+              height: 60,
+              child: Row(
+                children: [
+                  Spacer(),
+                  PageIndicator(),
+                ],
               ),
-            )
+            ),
           ],
         ),
       ),
