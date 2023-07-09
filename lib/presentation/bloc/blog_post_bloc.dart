@@ -15,13 +15,15 @@ class BlogPostBloc extends Bloc<BlogPostEvent, BlogPostState> {
 
   int currentPage = 1;
   late int lastPageOption;
-
   late int firstDisplayedBlogPostIndex;
   late int lastDisplayedBlogPostIndex;
 
   BlogPostBloc() : super(BlogPostInitial()) {
     on<LoadBlogPost>(
       (event, emit) async {
+        firstDisplayedBlogPostIndex = (currentPage - 1) * currentTotalEntries;
+        lastDisplayedBlogPostIndex =
+            firstDisplayedBlogPostIndex + currentTotalEntries;
         final dataRepo = BlogPostRepository(BlogPostProvider());
         await dataRepo.fetchAndSetBlogPostData();
         emit(BlogPostLoaded(BlogPostRepository.blogPost));
@@ -30,11 +32,11 @@ class BlogPostBloc extends Bloc<BlogPostEvent, BlogPostState> {
 
     on<UpdateTotalEntries>(
       (event, emit) {
-        print(isSearching);
         currentTotalEntries = event.totalEntries;
         firstDisplayedBlogPostIndex = (currentPage - 1) * currentTotalEntries;
         lastDisplayedBlogPostIndex =
             firstDisplayedBlogPostIndex + currentTotalEntries;
+
         List<BlogPost> displayedBlogPost = [];
         if (isSearching == true) {
           //show whats searched instead
@@ -78,6 +80,10 @@ class BlogPostBloc extends Bloc<BlogPostEvent, BlogPostState> {
         firstDisplayedBlogPostIndex = (currentPage - 1) * currentTotalEntries;
         lastDisplayedBlogPostIndex =
             firstDisplayedBlogPostIndex + currentTotalEntries;
+        if (lastDisplayedBlogPostIndex > BlogPostRepository.blogPost.length) {
+          lastDisplayedBlogPostIndex = BlogPostRepository.blogPost.length;
+        }
+
         if (isSearching == true) {
           //show whats searched instead
           if (searchedBlogPost.length > currentTotalEntries) {
