@@ -51,7 +51,7 @@ class BlogPostBloc extends Bloc<BlogPostEvent, BlogPostState> {
           }
           emit(SearchingBlog(displayedBlogPost));
         } else {
-          //show everything
+          //show everything instead
           displayedBlogPost = BlogPostRepository.blogPost
               .sublist(firstDisplayedBlogPostIndex, lastDisplayedBlogPostIndex);
           emit(BlogPostLoaded(displayedBlogPost));
@@ -84,6 +84,8 @@ class BlogPostBloc extends Bloc<BlogPostEvent, BlogPostState> {
         firstDisplayedBlogPostIndex = (currentPage - 1) * currentTotalEntries;
         lastDisplayedBlogPostIndex =
             firstDisplayedBlogPostIndex + currentTotalEntries;
+
+        //e.g. if the lastDisplayedBlogPostIndex is 104, but the blogPost.length is only 100, then the lastDisplayedBlogPostIndex is capped at 100
         if (lastDisplayedBlogPostIndex > BlogPostRepository.blogPost.length) {
           lastDisplayedBlogPostIndex = BlogPostRepository.blogPost.length;
         }
@@ -101,7 +103,6 @@ class BlogPostBloc extends Bloc<BlogPostEvent, BlogPostState> {
               .sublist(firstDisplayedBlogPostIndex, lastDisplayedBlogPostIndex);
           emit(BlogPostLoaded(displayedBlogPost));
         }
-        print("current page: $currentPage");
       },
     );
   }
