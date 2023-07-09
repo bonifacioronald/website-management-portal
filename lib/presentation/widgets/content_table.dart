@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:provider/provider.dart';
 import 'package:website_management_portal/data/models/blog_post.dart';
-import 'package:website_management_portal/data/providers/blog_post_provider.dart';
-import 'package:website_management_portal/data/repositories/blog_post_repository.dart';
 import 'package:website_management_portal/presentation/bloc/blog_post_bloc.dart';
 import 'package:website_management_portal/presentation/widgets/table_header.dart';
 import 'package:website_management_portal/presentation/widgets/table_item.dart';
@@ -17,10 +14,29 @@ class ContentTable extends StatelessWidget {
     return BlocBuilder<BlogPostBloc, BlogPostState>(
       builder: (context, state) {
         if (state is BlogPostInitial) {
-          return Center(child: CircularProgressIndicator());
+          return Center(
+              child: CircularProgressIndicator(
+            color: custom_colors.fontColor,
+          ));
         }
         if (state is BlogPostLoaded) {
           final List<BlogPost> blogPostList = state.blogPostList;
+          late int itemCount;
+
+          //Remaining items to be displayed
+          int totalBlogsToBeDisplayedInThePage =
+              blogPostBloc.lastDisplayedBlogPostIndex -
+                  blogPostBloc.firstDisplayedBlogPostIndex;
+
+          if (totalBlogsToBeDisplayedInThePage < //e.g: If only 2 posts left to be displayed on the last page, but total entry is >2
+              blogPostBloc.currentTotalEntries) {
+            itemCount =
+                totalBlogsToBeDisplayedInThePage; //listview builds only the (remaining items) number of times
+          } else {
+            itemCount = blogPostBloc
+                .currentTotalEntries; //listview builds accoridng to the total entries
+          }
+
           return Column(
             children: [
               TableHeading(),
@@ -28,7 +44,7 @@ class ContentTable extends StatelessWidget {
                 child: Container(
                   width: double.infinity,
                   child: ListView.builder(
-                    itemCount: blogPostBloc.currentTotalEntries,
+                    itemCount: itemCount,
                     itemBuilder: (_, index) {
                       return TableItem(blogPostList[index]);
                     },
@@ -45,7 +61,7 @@ class ContentTable extends StatelessWidget {
             children: [
               TableHeading(),
               Expanded(
-                child: suggestedBlogPostList.length == 0
+                child: suggestedBlogPostList.isEmpty
                     ? Center(
                         child: Text(
                           "Sorry, we can not find any matching data",
