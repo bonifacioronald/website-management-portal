@@ -24,6 +24,7 @@ class BlogPostBloc extends Bloc<BlogPostEvent, BlogPostState> {
 
     on<UpdateTotalEntries>(
       (event, emit) {
+        print(isSearching);
         currentTotalEntries = event.totalEntries;
         List<BlogPost> displayedBlogPost = [];
         if (isSearching == true) {

@@ -26,3 +26,12 @@ class SearchBlogPost extends BlogPostEvent {
   @override
   List<Object> get props => [searchKey];
 }
+
+class ChangePage extends BlogPostEvent {
+  int currentPage;
+
+  ChangePage(this.currentPage);
+
+  @override
+  List<Object> get props => [currentPage];
+}
