@@ -13,7 +13,7 @@ class TableHeading extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
       height: 40,
       color: custom_colors.secondaryColor,
       child: Row(
@@ -47,7 +47,7 @@ class TableHeading extends StatelessWidget {
                   fontWeight: FontWeight.bold),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             width: 40,
           ),
           Expanded(
