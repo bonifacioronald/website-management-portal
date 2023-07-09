@@ -21,10 +21,12 @@ class CustomSearchBar extends StatelessWidget {
         decoration: InputDecoration(
           suffixIcon: GestureDetector(
             onTap: () {
-              searchController.clear();
-              blogPostBloc.isSearching = false;
-              blogPostBloc.currentPage = 1;
-              blogPostBloc.add(LoadBlogPost());
+              if (searchController.text != "") {
+                searchController.clear();
+                blogPostBloc.isSearching = false;
+                blogPostBloc.currentPage = 1;
+                blogPostBloc.add(LoadBlogPost());
+              }
             },
             child: Icon(
               Icons.close,

@@ -84,7 +84,8 @@ class _PageIndicatorState extends State<PageIndicator> {
               width: 8,
             ),
             GestureDetector(
-                onTap: state is SearchingBlog
+                onTap: state
+                        is SearchingBlog //if is in searching state, the last(max) page is the pageNeededForSearchResult
                     ? () {
                         setState(() {
                           if (blogPostBloc.currentPage + 1 <
@@ -95,6 +96,7 @@ class _PageIndicatorState extends State<PageIndicator> {
                         });
                       }
                     : () {
+                        //else in normal state, the last page is the last page options
                         setState(
                           () {
                             if (blogPostBloc.currentPage + 1 <=

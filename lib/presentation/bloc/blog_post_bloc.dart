@@ -40,7 +40,7 @@ class BlogPostBloc extends Bloc<BlogPostEvent, BlogPostState> {
 
         List<BlogPost> displayedBlogPost = [];
         if (isSearching == true) {
-          //show whats searched instead
+          //show whats searched
           if (searchedBlogPost.length > currentTotalEntries) {
             //if the suggestion list > selected total entry, only display as many as the total entry
             displayedBlogPost = searchedBlogPost.sublist(
@@ -89,18 +89,14 @@ class BlogPostBloc extends Bloc<BlogPostEvent, BlogPostState> {
         }
 
         if (isSearching == true) {
-          //show whats searched instead
           if (searchedBlogPost.length > currentTotalEntries) {
-            //if the suggestion list > selected total entry, only display as many as the total entry
             displayedBlogPost = searchedBlogPost.sublist(
                 firstDisplayedBlogPostIndex, lastDisplayedBlogPostIndex);
           } else {
-            //if the suggestion list < selected total entry, display all suggestion
             displayedBlogPost = searchedBlogPost;
           }
           emit(SearchingBlog(displayedBlogPost));
         } else {
-          //show everything
           displayedBlogPost = BlogPostRepository.blogPost
               .sublist(firstDisplayedBlogPostIndex, lastDisplayedBlogPostIndex);
           emit(BlogPostLoaded(displayedBlogPost));
