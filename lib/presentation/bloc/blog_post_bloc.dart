@@ -15,21 +15,27 @@ class BlogPostBloc extends Bloc<BlogPostEvent, BlogPostState> {
 
   int currentPage = 1;
   late int lastPageOption;
+  late int firstDisplayedBlogPostIndex;
+  late int lastDisplayedBlogPostIndex;
 
   BlogPostBloc() : super(BlogPostInitial()) {
     on<LoadBlogPost>(
       (event, emit) async {
+        firstDisplayedBlogPostIndex = (currentPage - 1) * currentTotalEntries;
+        lastDisplayedBlogPostIndex =
+            firstDisplayedBlogPostIndex + currentTotalEntries;
         final dataRepo = BlogPostRepository(BlogPostProvider());
         await dataRepo.fetchAndSetBlogPostData();
-
         emit(BlogPostLoaded(BlogPostRepository.blogPost));
       },
     );
 
     on<UpdateTotalEntries>(
       (event, emit) {
-        print(isSearching);
         currentTotalEntries = event.totalEntries;
+        firstDisplayedBlogPostIndex = (currentPage - 1) * currentTotalEntries;
+        lastDisplayedBlogPostIndex =
+            firstDisplayedBlogPostIndex + currentTotalEntries;
 
         List<BlogPost> displayedBlogPost = [];
         if (isSearching == true) {
@@ -45,8 +51,8 @@ class BlogPostBloc extends Bloc<BlogPostEvent, BlogPostState> {
           emit(SearchingBlog(displayedBlogPost));
         } else {
           //show everything
-          displayedBlogPost =
-              BlogPostRepository.blogPost.sublist(0, currentTotalEntries);
+          displayedBlogPost = BlogPostRepository.blogPost
+              .sublist(firstDisplayedBlogPostIndex, lastDisplayedBlogPostIndex);
           emit(BlogPostLoaded(displayedBlogPost));
         }
       },
@@ -70,6 +76,31 @@ class BlogPostBloc extends Bloc<BlogPostEvent, BlogPostState> {
     on<ChangePage>(
       (event, emit) {
         currentPage = event.currentPage;
+        List<BlogPost> displayedBlogPost = [];
+        firstDisplayedBlogPostIndex = (currentPage - 1) * currentTotalEntries;
+        lastDisplayedBlogPostIndex =
+            firstDisplayedBlogPostIndex + currentTotalEntries;
+        if (lastDisplayedBlogPostIndex > BlogPostRepository.blogPost.length) {
+          lastDisplayedBlogPostIndex = BlogPostRepository.blogPost.length;
+        }
+
+        if (isSearching == true) {
+          //show whats searched instead
+          if (searchedBlogPost.length > currentTotalEntries) {
+            //if the suggestion list > selected total entry, only display as many as the total entry
+            displayedBlogPost =
+                searchedBlogPost.sublist(0, currentTotalEntries);
+          } else {
+            //if the suggestion list < selected total entry, display all suggestion
+            displayedBlogPost = searchedBlogPost;
+          }
+          emit(SearchingBlog(displayedBlogPost));
+        } else {
+          //show everything
+          displayedBlogPost = BlogPostRepository.blogPost
+              .sublist(firstDisplayedBlogPostIndex, lastDisplayedBlogPostIndex);
+          emit(BlogPostLoaded(displayedBlogPost));
+        }
         print("current page: $currentPage");
       },
     );

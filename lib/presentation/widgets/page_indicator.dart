@@ -13,11 +13,11 @@ class PageIndicator extends StatefulWidget {
 }
 
 class _PageIndicatorState extends State<PageIndicator> {
-  late int currentPage;
-  late int firstPageOption;
-  late int secondPageOption;
-  late int secondToLastPageOption;
-  late int lastPageOption;
+  static late int currentPage;
+  static late int firstPageOption;
+  static late int secondPageOption;
+  static late int secondToLastPageOption;
+  static late int lastPageOption;
 
   @override
   Widget build(BuildContext context) {
@@ -60,24 +60,24 @@ class _PageIndicatorState extends State<PageIndicator> {
                       onTap: () => setState(() {
                             blogPostBloc.add(ChangePage(firstPageOption));
                           }),
-                      child: _PageButton(firstPageOption.toString())),
+                      child: _StartAndEndPageButton(firstPageOption)),
                   GestureDetector(
                       onTap: () => setState(() {
                             blogPostBloc.add(ChangePage(secondPageOption));
                           }),
-                      child: _PageButton(secondPageOption.toString())),
-                  _PageButton("..."),
+                      child: _StartAndEndPageButton(secondPageOption)),
+                  _MiddlePageButton(currentPage),
                   GestureDetector(
                       onTap: () => setState(() {
                             blogPostBloc
                                 .add(ChangePage(secondToLastPageOption));
                           }),
-                      child: _PageButton(secondToLastPageOption.toString())),
+                      child: _StartAndEndPageButton(secondToLastPageOption)),
                   GestureDetector(
                       onTap: () => setState(() {
                             blogPostBloc.add(ChangePage(lastPageOption));
                           }),
-                      child: _PageButton(lastPageOption.toString())),
+                      child: _StartAndEndPageButton(lastPageOption)),
                 ],
               ),
             ),
@@ -146,15 +146,15 @@ class _NextPageButton extends StatelessWidget {
   }
 }
 
-class _PageButton extends StatelessWidget {
-  String page;
+class _StartAndEndPageButton extends StatelessWidget {
+  int page;
 
-  _PageButton(this.page);
+  _StartAndEndPageButton(this.page);
 
   @override
   Widget build(BuildContext context) {
     final blogPostBloc = BlocProvider.of<BlogPostBloc>(context);
-    bool isSelected = (page == blogPostBloc.currentPage.toString());
+    bool isSelected = (page == blogPostBloc.currentPage);
 
     return Container(
       height: 32,
@@ -166,7 +166,45 @@ class _PageButton extends StatelessWidget {
               : custom_colors.secondaryColor),
       child: Center(
         child: Text(
-          page,
+          page.toString(),
+          style: TextStyle(
+              color: isSelected ? Colors.white : custom_colors.fontColor,
+              fontSize: 12),
+        ),
+      ),
+    );
+  }
+}
+
+class _MiddlePageButton extends StatelessWidget {
+  int page;
+
+  _MiddlePageButton(this.page);
+
+  @override
+  Widget build(BuildContext context) {
+    late bool isSelected;
+
+    if (page != _PageIndicatorState.firstPageOption &&
+        page != _PageIndicatorState.secondPageOption &&
+        page != _PageIndicatorState.secondToLastPageOption &&
+        page != _PageIndicatorState.lastPageOption) {
+      isSelected = true;
+    } else {
+      isSelected = false;
+    }
+
+    return Container(
+      height: 32,
+      width: 32,
+      decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: isSelected
+              ? custom_colors.accentColor
+              : custom_colors.secondaryColor),
+      child: Center(
+        child: Text(
+          isSelected ? page.toString() : "...",
           style: TextStyle(
               color: isSelected ? Colors.white : custom_colors.fontColor,
               fontSize: 12),
