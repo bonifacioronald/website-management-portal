@@ -17,6 +17,7 @@ class BlogPostBloc extends Bloc<BlogPostEvent, BlogPostState> {
   late int lastPageOption;
   late int firstDisplayedBlogPostIndex;
   late int lastDisplayedBlogPostIndex;
+  late int pageNeededForSearchResult;
 
   BlogPostBloc() : super(BlogPostInitial()) {
     on<LoadBlogPost>(
@@ -69,6 +70,8 @@ class BlogPostBloc extends Bloc<BlogPostEvent, BlogPostState> {
             return post.title.contains(event.searchKey);
           }).toList();
           searchedBlogPost = suggestion;
+          pageNeededForSearchResult =
+              (searchedBlogPost.length / currentTotalEntries).ceil();
           emit(SearchingBlog(searchedBlogPost));
         }
       },

@@ -84,17 +84,27 @@ class _PageIndicatorState extends State<PageIndicator> {
               width: 8,
             ),
             GestureDetector(
-                onTap: () {
-                  setState(
-                    () {
-                      if (blogPostBloc.currentPage + 1 <=
-                          blogPostBloc.lastPageOption) {
-                        blogPostBloc
-                            .add(ChangePage(blogPostBloc.currentPage + 1));
+                onTap: state is SearchingBlog
+                    ? () {
+                        setState(() {
+                          if (blogPostBloc.currentPage + 1 <
+                              blogPostBloc.pageNeededForSearchResult) {
+                            blogPostBloc
+                                .add(ChangePage(blogPostBloc.currentPage + 1));
+                          }
+                        });
                       }
-                    },
-                  );
-                },
+                    : () {
+                        setState(
+                          () {
+                            if (blogPostBloc.currentPage + 1 <=
+                                blogPostBloc.lastPageOption) {
+                              blogPostBloc.add(
+                                  ChangePage(blogPostBloc.currentPage + 1));
+                            }
+                          },
+                        );
+                      },
                 child: const _NextPageButton())
           ],
         );
